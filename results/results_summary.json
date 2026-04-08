@@ -1,0 +1,250 @@
+{
+  "config": {
+    "dataset": "sample_synthetic_with_time.csv",
+    "split_mode": "time_ordered",
+    "exclude_time_features": true,
+    "top_k_features": 12,
+    "top_features": [
+      "Time_Since_Last_Transaction",
+      "Email_Domain_Age_Days",
+      "Account_Age_Days",
+      "Transactions_Last_7d",
+      "Days_Since_Last_Address_Change",
+      "Geo_Location_Risk",
+      "Transaction_Hour",
+      "Transactions_Last_24h",
+      "Session_Duration",
+      "Failed_Login_Count",
+      "Credit_Limit_Utilization",
+      "IP_Risk_Score",
+      "Device_Risk_Score_bin"
+    ],
+    "random_seed": 42,
+    "stability_seeds": [
+      11,
+      22,
+      33,
+      44,
+      55
+    ],
+    "categorical_columns": [
+      "Merchant_Category",
+      "Transaction_Channel",
+      "Device_Type",
+      "Payment_Method",
+      "Country_Code",
+      "Account_Type",
+      "Card_Presence",
+      "Customer_Segment",
+      "Merchant_Size",
+      "Authentication_Type",
+      "Transaction_Day_Of_Week",
+      "Card_Type",
+      "Email_Provider"
+    ],
+    "binned_feature": "Device_Risk_Score_bin"
+  },
+  "baseline_ga": {
+    "best_rule": "Transactions_Last_7d >= 19.0000  AND  Days_Since_Last_Address_Change < 416.0000  AND  Transaction_Hour < 10.0000  AND  Email_Domain_Age_Days <= 2633.0000",
+    "n_conditions": 4,
+    "operators": {
+      "crossover": "SwapCX",
+      "mutation": "ThresholdBiasedMut",
+      "selection": "Tournament3"
+    },
+    "train_metrics": {
+      "precision": 0.5924006908462867,
+      "recall": 0.33463414634146343,
+      "f1": 0.42768079800498754,
+      "alert_rate": 0.0027571428571428573
+    },
+    "val_metrics": {
+      "precision": 0.7021276595744681,
+      "recall": 0.4008097165991903,
+      "f1": 0.5103092783505154,
+      "alert_rate": 0.0031333333333333335
+    },
+    "test_metrics": {
+      "precision": 0.6341463414634146,
+      "recall": 0.34210526315789475,
+      "f1": 0.4444444444444444,
+      "alert_rate": 0.0027333333333333333
+    }
+  },
+  "coevolution_ga": {
+    "best_ruleset": "  Rule 1: Transactions_Last_24h > 4.0000  AND  Device_Risk_Score_bin >= 8  AND  IP_Risk_Score >= 37.4000  AND  Time_Since_Last_Transaction <= 29.9600  AND  Email_Domain_Age_Days < 1887.0000\n  Rule 2: Transactions_Last_7d >= 11.0000  AND  Email_Domain_Age_Days < 144.0000  AND  Days_Since_Last_Address_Change <= 48.0000  AND  Transaction_Hour <= 10.0000\n  Rule 3: Transactions_Last_24h >= 4.0000  AND  Session_Duration <= 93.8000  AND  Geo_Location_Risk >= 32.6000  AND  Credit_Limit_Utilization >= 0.1190  AND  Time_Since_Last_Transaction < 4.2490\n  Rule 4: Credit_Limit_Utilization > 0.7050  AND  Geo_Location_Risk >= 42.1000  AND  IP_Risk_Score >= 28.1000  AND  Days_Since_Last_Address_Change < 538.0000\n  Rule 5: Days_Since_Last_Address_Change < 48.0000  AND  Account_Age_Days <= 932.0000  AND  Failed_Login_Count >= 2.0000  AND  Transactions_Last_24h > 3.0000  AND  Session_Duration <= 648.4000",
+    "n_paths": 5,
+    "nodes_per_path": [
+      5,
+      4,
+      5,
+      4,
+      5
+    ],
+    "operators": {
+      "path_crossover": "cx_paths_co (swap condition)",
+      "path_mutation": "mutate_path_co (thr/flip/replace/add_node/drop_node)",
+      "ruleset_crossover": "cx_rulesets_co (swap path)",
+      "ruleset_mutation": "mutate_ruleset_co (add_path/drop_path/mutate_node)",
+      "selection": "Tournament3"
+    },
+    "train_metrics": {
+      "precision": 0.7801778907242694,
+      "recall": 0.5990243902439024,
+      "f1": 0.6777041942604857,
+      "alert_rate": 0.003747619047619048
+    },
+    "val_metrics": {
+      "precision": 0.9095477386934674,
+      "recall": 0.7327935222672065,
+      "f1": 0.8116591928251121,
+      "alert_rate": 0.004422222222222222
+    },
+    "test_metrics": {
+      "precision": 0.7722222222222223,
+      "recall": 0.6096491228070176,
+      "f1": 0.6813725490196079,
+      "alert_rate": 0.004
+    },
+    "operating_points": {
+      "aggressive": {
+        "precision": 0.7722222222222223,
+        "recall": 0.6096491228070176,
+        "f1": 0.6813725490196079,
+        "alert_rate": 0.004
+      }
+    }
+  },
+  "nsga2_ga": {
+    "operators": {
+      "crossover": "cx_rulesets_co (swap path)",
+      "mutation": "mutate_ruleset_co (add_path/drop_path/mutate_node)",
+      "selection": "NSGA2 TournamentDCD + selNSGA2",
+      "fitness": "(Precision, Recall) multi-objective"
+    },
+    "pareto_front_size": 100,
+    "operating_points": {
+      "conservative": {
+        "train_metrics": {
+          "precision": 0.6986301369863014,
+          "recall": 0.04975609756097561,
+          "f1": 0.09289617486338798,
+          "alert_rate": 0.0003476190476190476
+        },
+        "val_metrics": {
+          "train_precision": 0.6986301369863014,
+          "train_recall": 0.04975609756097561,
+          "train_f1": 0.09289617486338798,
+          "train_alert_rate": 0.0003476190476190476,
+          "precision": 1.0,
+          "recall": 0.08906882591093117,
+          "f1": 0.16356877323420074,
+          "alert_rate": 0.0004888888888888889,
+          "test_precision": 0.8333333333333334,
+          "test_recall": 0.08771929824561403,
+          "test_f1": 0.15873015873015872,
+          "test_alert_rate": 0.0005333333333333334
+        },
+        "test_metrics": {
+          "precision": 0.8333333333333334,
+          "recall": 0.08771929824561403,
+          "f1": 0.15873015873015872,
+          "alert_rate": 0.0005333333333333334
+        }
+      },
+      "balanced": {
+        "train_metrics": {
+          "precision": 0.8827361563517915,
+          "recall": 0.26439024390243904,
+          "f1": 0.4069069069069069,
+          "alert_rate": 0.001461904761904762
+        },
+        "val_metrics": {
+          "train_precision": 0.8827361563517915,
+          "train_recall": 0.26439024390243904,
+          "train_f1": 0.4069069069069069,
+          "train_alert_rate": 0.001461904761904762,
+          "precision": 0.961038961038961,
+          "recall": 0.29959514170040485,
+          "f1": 0.4567901234567901,
+          "alert_rate": 0.0017111111111111112,
+          "test_precision": 0.9264705882352942,
+          "test_recall": 0.27631578947368424,
+          "test_f1": 0.42567567567567566,
+          "test_alert_rate": 0.001511111111111111
+        },
+        "test_metrics": {
+          "precision": 0.9264705882352942,
+          "recall": 0.27631578947368424,
+          "f1": 0.42567567567567566,
+          "alert_rate": 0.001511111111111111
+        }
+      },
+      "aggressive": {
+        "train_metrics": {
+          "precision": 0.3633423180592992,
+          "recall": 0.6575609756097561,
+          "f1": 0.46805555555555556,
+          "alert_rate": 0.008833333333333334
+        },
+        "val_metrics": {
+          "train_precision": 0.3633423180592992,
+          "train_recall": 0.6575609756097561,
+          "train_f1": 0.46805555555555556,
+          "train_alert_rate": 0.008833333333333334,
+          "precision": 0.3938679245283019,
+          "recall": 0.6761133603238867,
+          "f1": 0.4977645305514158,
+          "alert_rate": 0.009422222222222222,
+          "test_precision": 0.3935643564356436,
+          "test_recall": 0.6973684210526315,
+          "test_f1": 0.5031645569620253,
+          "test_alert_rate": 0.008977777777777777
+        },
+        "test_metrics": {
+          "precision": 0.3935643564356436,
+          "recall": 0.6973684210526315,
+          "f1": 0.5031645569620253,
+          "alert_rate": 0.008977777777777777
+        }
+      }
+    }
+  },
+  "greedy_builder": {
+    "best_ruleset": "  Rule 1: Transactions_Last_7d >= 7.0000  AND  Email_Domain_Age_Days <= 144.0000  AND  Days_Since_Last_Address_Change <= 48.0000  AND  Transaction_Hour <= 10.0000  AND  Session_Duration <= 648.4000  AND  Credit_Limit_Utilization > 0.0090\n  Rule 2: Transactions_Last_24h >= 4.0000  AND  Session_Duration <= 93.8000  AND  Geo_Location_Risk >= 32.6000  AND  Credit_Limit_Utilization >= 0.1190  AND  Time_Since_Last_Transaction < 4.2490\n  Rule 3: Credit_Limit_Utilization > 0.7050  AND  Geo_Location_Risk >= 42.1000  AND  IP_Risk_Score >= 28.1000  AND  Days_Since_Last_Address_Change < 538.0000\n  Rule 4: Days_Since_Last_Address_Change < 48.0000  AND  Account_Age_Days <= 932.0000  AND  Failed_Login_Count >= 2.0000  AND  Transactions_Last_24h > 3.0000  AND  Session_Duration <= 648.4000\n  Rule 5: Transactions_Last_24h > 4.0000  AND  Geo_Location_Risk >= 42.1000  AND  IP_Risk_Score >= 37.4000  AND  Time_Since_Last_Transaction <= 29.9600  AND  Email_Domain_Age_Days < 1887.0000\n  Rule 6: Transactions_Last_7d >= 11.0000  AND  Email_Domain_Age_Days < 144.0000  AND  Days_Since_Last_Address_Change <= 48.0000  AND  Transaction_Hour <= 10.0000\n  Rule 7: Transactions_Last_24h > 4.0000  AND  Device_Risk_Score_bin >= 8  AND  IP_Risk_Score >= 37.4000  AND  Time_Since_Last_Transaction <= 29.9600  AND  Email_Domain_Age_Days < 1887.0000",
+    "n_paths": 7,
+    "nodes_per_path": [
+      6,
+      5,
+      4,
+      5,
+      5,
+      4,
+      5
+    ],
+    "hyperparameters": {
+      "lambda": 1.0,
+      "gamma": 0.5,
+      "max_rules": 10,
+      "min_new_tp": 1
+    },
+    "train_metrics": {
+      "precision": 0.7204058624577226,
+      "recall": 0.6234146341463415,
+      "f1": 0.6684100418410042,
+      "alert_rate": 0.004223809523809524
+    },
+    "val_metrics": {
+      "precision": 0.831858407079646,
+      "recall": 0.7611336032388664,
+      "f1": 0.7949260042283298,
+      "alert_rate": 0.005022222222222222
+    },
+    "test_metrics": {
+      "precision": 0.7170731707317073,
+      "recall": 0.6447368421052632,
+      "f1": 0.6789838337182448,
+      "alert_rate": 0.004555555555555556
+    }
+  }
+}
