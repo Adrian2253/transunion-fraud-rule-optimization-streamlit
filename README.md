@@ -32,14 +32,19 @@ Paul Williams, Henry Jonah — TransUnion
 pip install deap scikit-learn pandas numpy matplotlib seaborn
 
 ## Key Results
+
 | Model | Precision | Recall | F1 | Alert Rate |
 |---|---|---|---|---|
-| Baseline GA | 76.7% | 39.0% | 51.7% | 0.26% |
-| Coevolution GA | 80.9% | 68.9% | 74.4% | 0.43% |
-| NSGA-II | 82.8% | 67.5% | 74.4% | 0.41% |
-| Greedy Builder | 75.4% | 63.2% | 68.7% | 0.42% |
+| Baseline GA | 63.4% | 34.2% | 44.4% | 0.27% |
+| Coevolution GA | 77.2% | 61.0% | 68.1% | 0.40% |
+| NSGA-II (Conservative) | 83.3% | 8.8% | 15.9% | 0.05% |
+| NSGA-II (Balanced) | 92.6% | 27.6% | 42.6% | 0.15% |
+| NSGA-II (Aggressive) | 39.4% | 69.7% | 50.3% | 0.90% |
+| Greedy Builder | 71.7% | 64.5% | 67.9% | 0.46% |
+
 
 ## Notes
-- All models evaluated on the same 70/15/15 time-based train/val/test split
+- All metrics reported on the test set. Time-based train/val/test split (70/15/15).
+- NSGA-II produces a Pareto front — three operating points shown representing different precision/recall trade-offs.
 - Full synthetic dataset (~330K transactions) available on request# transunion-fraud-rule-optimization
 Evolutionary algorithm pipeline for automated fraud detection rule discovery - UIC MSBA Capstone in partnership with TransUnion.
