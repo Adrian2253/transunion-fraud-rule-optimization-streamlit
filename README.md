@@ -14,7 +14,7 @@ The project was completed as part of IDS 560 at the University of Illinois Chica
 - Siddhi Jain
 
 ## Sponsors
-Brooks Bourland, Paul Williams, Henry Jonah — TransUnion
+Paul Williams, Henry Jonah — TransUnion
 
 ## Repository Structure
 - `notebooks/` — end-to-end GA pipeline and results visualizations
